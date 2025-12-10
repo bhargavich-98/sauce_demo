@@ -1,0 +1,24 @@
+2025-12-10 21:13:38,724 - ERROR - [CALL] Test test_end_to_end_checkout failed. Screenshot saved: reports\screenshots\test_end_to_end_checkout_call_20251210_211338.png
+2025-12-10 21:13:38,725 - ERROR - Exception in test test_end_to_end_checkout during call: Message: 
+Stacktrace:
+Symbols not available. Dumping unresolved backtrace:
+	0x7ff76620a235
+	0x7ff765f62630
+	0x7ff765cf16dd
+	0x7ff765d4a27e
+	0x7ff765d4a58c
+	0x7ff765d9ed77
+	0x7ff765d9baba
+	0x7ff765d3b0ed
+	0x7ff765d3bf63
+	0x7ff766235d60
+	0x7ff76622fe8a
+	0x7ff766251005
+	0x7ff765f7d71e
+	0x7ff765f84e1f
+	0x7ff765f6b7c4
+	0x7ff765f6b97f
+	0x7ff765f518e8
+	0x7ffc90ede8d7
+	0x7ffc9286c53c
+

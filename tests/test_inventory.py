@@ -25,7 +25,7 @@ def test_add_first_item_to_cart(driver):
     inventory.add_first_item_to_cart()
     time.sleep(5)
 
-    assert inventory.get_cart_count() == "1"
+    assert inventory.get_cart_count() == 1
     print("\n", inventory.get_cart_count())
 
 

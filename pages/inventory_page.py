@@ -2,7 +2,7 @@ from selenium.webdriver.common.by import By
 from selenium.webdriver.support.ui import WebDriverWait
 from selenium.webdriver.support import expected_conditions as EC
 from pages.base_page import BasePage
-from selenium.common.exceptions import TimeoutException, NoSuchElementException, ElementClickInterceptedException
+from selenium.common.exceptions import TimeoutException, NoSuchFrameException
 import time
 
 class InventoryPage(BasePage):
@@ -16,33 +16,26 @@ class InventoryPage(BasePage):
     def is_loaded(self):
         return self.find(*self._page_title).text.strip() == "Products"
 
-    def close_data_breach_popup(self, timeout=5):
-        try:
-            WebDriverWait(self.driver, timeout).until(
-                EC.element_to_be_clickable(self._popup_close_btn)
-            ).click()
-            print("Popup closed successfully")
-        except TimeoutException:
-            print("No popup appeared, continuing...")
-        except Exception as e:
-            print(f"Error closing popup: {e}")
+    def close_data_breach_popup(self):
+        self.close_data_breach_popup_if_visible()
 
     def add_first_item_to_cart(self):
-        self.close_data_breach_popup()  # handle popup first
-
+        self.close_data_breach_popup()
+        
         try:
-            btn = WebDriverWait(self.driver, 10).until(
+            # Step 1: Wait for the button to be clickable
+            btn = WebDriverWait(self.driver, 5).until(
                 EC.element_to_be_clickable(self._add_first)
             )
-            btn.click()
-        except TimeoutException:
-            print("Add to Cart button not clickable!")
-            raise
-        except Exception:
-            # fallback click via JS
-            btn = self.driver.find_element(*self._add_first)
+            
+            # Step 2: Click using JavaScript to avoid interception
             self.driver.execute_script("arguments[0].click();", btn)
-
+            print("Successfully added first item to cart.")
+            
+        except Exception as e:
+            print(f"Error during 'Add to Cart' process: {e}")
+            raise
+        
     def open_cart(self):
         WebDriverWait(self.driver, 5).until(
             EC.element_to_be_clickable(self._cart_icon)
@@ -53,7 +46,12 @@ class InventoryPage(BasePage):
 
     def get_cart_count(self):
         try:
-            element = WebDriverWait(self.driver, 5).until(EC.presence_of_element_located(*self._badge))
-            return element.text
-        except:
-            return "0"
+            badge = WebDriverWait(self.driver, 5).until(
+                EC.presence_of_element_located(self._badge)
+            )
+            count = badge.text.strip()
+            print(f"Cart count: {count}")
+            return int(count)
+        except TimeoutException:
+            print("No items in cart (badge not visible).")
+            return 0

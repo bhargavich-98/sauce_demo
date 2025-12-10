@@ -1,0 +1,5 @@
+2025-12-10 21:07:28,557 - ERROR - [CALL] Test test_end_to_end_checkout failed. Screenshot saved: reports\screenshots\test_end_to_end_checkout_call_20251210_210728.png
+2025-12-10 21:07:28,558 - ERROR - Exception in test test_end_to_end_checkout during call: Cart page did not load properly
+assert False
+ +  where False = is_loaded()
+ +    where is_loaded = <pages.cart_page.CartPage object at 0x000002E1DC9963C0>.is_loaded

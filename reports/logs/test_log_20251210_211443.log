@@ -1,0 +1,4 @@
+2025-12-10 21:15:35,671 - ERROR - [CALL] Test test_add_first_item_to_cart failed. Screenshot saved: reports\screenshots\test_add_first_item_to_cart_call_20251210_211535.png
+2025-12-10 21:15:35,672 - ERROR - Exception in test test_add_first_item_to_cart during call: assert 1 == '1'
+ +  where 1 = get_cart_count()
+ +    where get_cart_count = <pages.inventory_page.InventoryPage object at 0x0000023082890180>.get_cart_count

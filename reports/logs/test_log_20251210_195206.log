@@ -1,0 +1,5 @@
+2025-12-10 19:52:25,780 - ERROR - [CALL] Test test_end_to_end_checkout failed. Screenshot saved: reports\screenshots\test_end_to_end_checkout_call_20251210_195225.png
+2025-12-10 19:52:25,780 - ERROR - Exception in test test_end_to_end_checkout during call: assert 0 > 0
+ +  where 0 = int('0')
+ +    where '0' = get_cart_count()
+ +      where get_cart_count = <pages.inventory_page.InventoryPage object at 0x000001EC886BFB10>.get_cart_count

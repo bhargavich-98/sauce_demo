@@ -6,6 +6,9 @@ from pages.checkout_overview_page import CheckoutOverviewPage
 from pages.checkout_complete_page import CheckoutCompletePage
 from selenium.webdriver.common.alert import Alert
 from selenium.common.exceptions import NoAlertPresentException
+from selenium.webdriver.support.ui import WebDriverWait
+from selenium.webdriver.support import expected_conditions as EC
+import time
 
 
 def test_end_to_end_checkout(driver):
@@ -24,15 +27,16 @@ def test_end_to_end_checkout(driver):
     #Close popup through inventory page object
     inventory = InventoryPage(driver)
     inventory.close_data_breach_popup()
+    assert len(inventory.get_all_products()) > 0, "Products list is empty, potential login/session failure."
 
     inventory.add_first_item_to_cart()
-    time.sleep(5)
+    WebDriverWait(driver, 10).until(EC.text_to_be_present_in_element(InventoryPage._badge, '1'))
     inventory.open_cart()
-    assert int(inventory.get_cart_count()) > 0
-
+    time.sleep(2)  # Give page time to load
+    
     items = cart.get_items()
-    print("Cart items found:", items)
-    assert len(items) > 0
+    print("Cart items found:", len(items))
+    assert len(items) > 0, "No items found in cart"
 
     cart.click_checkout()
     checkout.fill_information("Ammu", "QA", "500001")
