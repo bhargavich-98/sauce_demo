@@ -18,14 +18,15 @@ def test_end_to_end_checkout(driver):
 
     login.open()
     login.login("standard_user", "secret_sauce")
-
+    login.wait_for_inventory_page()
     assert inventory.is_loaded()
 
-    # Close popup through inventory page object
-    # inventory = InventoryPage(driver)
-    # inventory.close_data_breach_popup()
+    #Close popup through inventory page object
+    inventory = InventoryPage(driver)
+    inventory.close_data_breach_popup()
 
     inventory.add_first_item_to_cart()
+    time.sleep(5)
     inventory.open_cart()
     assert int(inventory.get_cart_count()) > 0
 
