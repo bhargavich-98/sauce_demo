@@ -44,4 +44,4 @@ def test_end_to_end_checkout(driver):
 
     overview.click_finish()
 
-    assert complete.is_success()
+    assert complete.is_success(), "Checkout did not complete successfully"
