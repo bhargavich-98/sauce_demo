@@ -1,0 +1,4 @@
+2025-12-12 18:43:00,645 - ERROR - [CALL] Test test_end_to_end_checkout failed. Screenshot saved: reports\screenshots\test_end_to_end_checkout_call_20251212_184300.png
+2025-12-12 18:43:00,646 - ERROR - Exception in test test_end_to_end_checkout during call: No items found in cart
+assert 0 > 0
+ +  where 0 = len([])

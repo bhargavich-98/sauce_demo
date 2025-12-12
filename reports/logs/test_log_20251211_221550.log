@@ -1,0 +1,3 @@
+2025-12-11 22:17:03,822 - ERROR - [CALL] Test test_open_cart_page failed. Screenshot saved: reports\screenshots\test_open_cart_page_call_20251211_221703.png
+2025-12-11 22:17:03,823 - ERROR - Exception in test test_open_cart_page during call: assert 'cart' in 'https://www.saucedemo.com/inventory.html'
+ +  where 'https://www.saucedemo.com/inventory.html' = <selenium.webdriver.chrome.webdriver.WebDriver (session="a2fc1540363d1eb8c2bd8c0b14f31a94")>.current_url

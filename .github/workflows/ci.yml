@@ -24,11 +24,13 @@ jobs:
           python -m pip install --upgrade pip
           pip install -r requirements.txt
 
-      - name: Setup Google Chrome
-        uses: browser-actions/setup-chrome@v1
+      - name: Setup Firefox
+        uses: browser-actions/setup-firefox@v1
 
-      - name: Setup ChromeDriver
-        uses: nanasess/setup-chromedriver@v2
+      - name: Setup GeckoDriver
+        run: |
+          sudo apt-get update
+          sudo apt-get install -y firefox-geckodriver
 
       - name: Run Pytest suite
         env:

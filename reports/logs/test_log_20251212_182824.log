@@ -1,0 +1,24 @@
+2025-12-12 18:28:28,242 - ERROR - Exception in test test_end_to_end_checkout during setup: Message: no such alert
+  (Session info: chrome=142.0.7444.176)
+Stacktrace:
+Symbols not available. Dumping unresolved backtrace:
+	0x7ff7f384a235
+	0x7ff7f35a2630
+	0x7ff7f33314e5
+	0x7ff7f3320b84
+	0x7ff7f335a337
+	0x7ff7f33b2b9d
+	0x7ff7f335a1a6
+	0x7ff7f337b0ed
+	0x7ff7f337bf63
+	0x7ff7f3875d60
+	0x7ff7f386fe8a
+	0x7ff7f3891005
+	0x7ff7f35bd71e
+	0x7ff7f35c4e1f
+	0x7ff7f35ab7c4
+	0x7ff7f35ab97f
+	0x7ff7f35918e8
+	0x7ffdd1cde8d7
+	0x7ffdd294c53c
+

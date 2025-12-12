@@ -1,0 +1,25 @@
+2025-12-12 18:10:51,526 - ERROR - Exception in test test_end_to_end_checkout during setup: Message: session not created
+from disconnected: unable to connect to renderer; For documentation on this error, please visit: https://www.selenium.dev/documentation/webdriver/troubleshooting/errors#sessionnotcreatedexception
+Stacktrace:
+Symbols not available. Dumping unresolved backtrace:
+	0x7ff71202a235
+	0x7ff711d82630
+	0x7ff711b116dd
+	0x7ff711b56ed6
+	0x7ff711b5155e
+	0x7ff711b4bc03
+	0x7ff711ba0bc2
+	0x7ff711ba0400
+	0x7ff711b5b0ed
+	0x7ff711b5bf63
+	0x7ff712055d60
+	0x7ff71204fe8a
+	0x7ff712071005
+	0x7ff711d9d71e
+	0x7ff711da4e1f
+	0x7ff711d8b7c4
+	0x7ff711d8b97f
+	0x7ff711d718e8
+	0x7ffdd1cde8d7
+	0x7ffdd294c53c
+

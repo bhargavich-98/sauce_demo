@@ -2,74 +2,53 @@ pipeline {
     agent any
 
     environment {
-        VENV_DIR = "venv"
-        CHROME_DRIVER_ZIP = "chromedriver.zip"
-        CHROME_DRIVER_EXE = "chromedriver.exe"
-        PYTHON = "python"
+        PYTHON_VERSION = "3.13"
+        VENV_DIR = ".venv"
     }
 
     stages {
-        stage('Checkout SCM') {
+
+        stage('Checkout') {
             steps {
-                git url: 'https://github.com/bhargavich-98/sauce_demo.git', branch: 'main'
+                git branch: 'main',
+                    url: 'https://github.com/bhargavich-98/sauce_demo.git', branch: 'main'
             }
         }
 
-        stage('Setup Python') {
+        stage('Set up Python') {
             steps {
-                bat """
-                ${env.PYTHON} -m venv ${env.VENV_DIR}
-                call ${env.VENV_DIR}\\Scripts\\activate.bat
-                python -m pip install --upgrade pip
-                pip install -r requirements.txt
+                sh """
+                    python --version
+                    python -m venv ${VENV_DIR}
+                    . ${VENV_DIR}/bin/activate
+                    pip install --upgrade pip
                 """
             }
         }
 
-        stage('Install Chrome') {
+        stage('Install Dependencies') {
             steps {
-                bat """
-                IF NOT EXIST "C:\\Program Files\\Google\\Chrome\\Application\\chrome.exe" (
-                    powershell -Command "Start-Process 'https://dl.google.com/chrome/install/375.126/chrome_installer.exe' -Wait"
-                )
+                sh """
+                    . ${VENV_DIR}/bin/activate
+                    pip install -r requirements.txt
                 """
             }
         }
 
-        stage('Install ChromeDriver') {
+        stage('Run Selenium Tests') {
             steps {
-                bat """
-                powershell -Command "Invoke-WebRequest -Uri https://chromedriver.storage.googleapis.com/114.0.5735.90/chromedriver_win32.zip -OutFile ${env.CHROME_DRIVER_ZIP}"
-                powershell -Command "Expand-Archive -Force -Path ${env.CHROME_DRIVER_ZIP} -DestinationPath ."
+                sh """
+                    . ${VENV_DIR}/bin/activate
+                    pytest --disable-warnings --maxfail=1 -q
                 """
-            }
-        }
-
-        stage('Run Pytest Tests') {
-            steps {
-                bat """
-                call ${env.VENV_DIR}\\Scripts\\activate.bat
-                pytest --html=report.html --self-contained-html
-                """
-            }
-        }
-
-        stage('Archive Artifacts') {
-            steps {
-                archiveArtifacts artifacts: 'report.html', allowEmptyArchive: true
             }
         }
     }
 
     post {
         always {
-            echo 'CI Pipeline completed.'
-        }
-        success {
-            echo 'Tests passed successfully.'
-        }
-        failure {
-            echo 'Tests failed. Screenshots and logs archived for debugging.'
+            archiveArtifacts artifacts: '**/screenshots/*.png', allowEmptyArchive: true
+            junit '**/reports/*.xml'
         }
     }
 }
