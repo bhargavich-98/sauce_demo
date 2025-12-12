@@ -29,8 +29,8 @@ jobs:
 
       - name: Setup GeckoDriver
         run: |
-          sudo apt-get update
-          sudo apt-get install -y firefox-geckodriver
+          sudo apt get update
+          sudo apt install firefox -y
 
       - name: Run Pytest suite
         env:
