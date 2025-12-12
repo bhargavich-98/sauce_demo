@@ -15,31 +15,25 @@ pipeline {
             }
         }
 
-        stage('Set up Python') {
+        stage('Setup, Install, Run Tests') {
             steps {
-                sh """
+                bat """
                     python --version
-                    python -m venv ${VENV_DIR}
-                    . ${VENV_DIR}/bin/activate
+
+                    REM Create virtual environment
+                    python -m venv %VENV_DIR%
+
+                    REM Activate venv
+                    call %VENV_DIR%\\Scripts\\activate
+
+                    REM Upgrade pip
                     pip install --upgrade pip
-                """
-            }
-        }
 
-        stage('Install Dependencies') {
-            steps {
-                sh """
-                    . ${VENV_DIR}/bin/activate
+                    REM Install project dependencies
                     pip install -r requirements.txt
-                """
-            }
-        }
 
-        stage('Run Selenium Tests') {
-            steps {
-                sh """
-                    . ${VENV_DIR}/bin/activate
-                    pytest --disable-warnings --maxfail=1 -q
+                    REM Run pytest with JUnit XML report
+                    pytest --junitxml=reports/results.xml --disable-warnings --maxfail=1 -q
                 """
             }
         }
@@ -48,7 +42,7 @@ pipeline {
     post {
         always {
             archiveArtifacts artifacts: '**/screenshots/*.png', allowEmptyArchive: true
-            junit '**/reports/*.xml'
+            junit 'reports/results.xml'
         }
     }
 }
