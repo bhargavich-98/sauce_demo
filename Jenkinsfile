@@ -11,29 +11,35 @@ pipeline {
         stage('Checkout') {
             steps {
                 git branch: 'main',
-                    url: 'https://github.com/bhargavich-98/sauce_demo.git'
+                    url: 'https://github.com/bhargavich-98/sauce_demo.git', branch: 'main'
             }
         }
 
-        stage('Setup, Install, Run Tests') {
+        stage('Set up Python') {
             steps {
                 bat """
                     python --version
-
-                    REM Create virtual environment
-                    python -m venv %VENV_DIR%
-
-                    REM Activate venv
-                    call %VENV_DIR%\\Scripts\\activate
-
-                    REM Upgrade pip
+                    python -m venv ${VENV_DIR}
+                    . ${VENV_DIR}/bin/activate
                     pip install --upgrade pip
+                """
+            }
+        }
 
-                    REM Install project dependencies
+        stage('Install Dependencies') {
+            steps {
+                bat """
+                    . ${VENV_DIR}/bin/activate
                     pip install -r requirements.txt
+                """
+            }
+        }
 
-                    REM Run pytest with JUnit XML report
-                    pytest --junitxml=reports/results.xml --disable-warnings --maxfail=1 -q
+        stage('Run Selenium Tests') {
+            steps {
+                bat """
+                    . ${VENV_DIR}/bin/activate
+                    pytest --disable-warnings --maxfail=1 -q
                 """
             }
         }
@@ -42,7 +48,7 @@ pipeline {
     post {
         always {
             archiveArtifacts artifacts: '**/screenshots/*.png', allowEmptyArchive: true
-            junit 'reports/results.xml'
+            junit '**/reports/*.xml'
         }
     }
 }
