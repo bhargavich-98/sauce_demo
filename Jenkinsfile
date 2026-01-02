@@ -17,7 +17,7 @@ pipeline {
 
         stage('Set up Python') {
             steps {
-                sh """
+                bat """
                     python --version
                     python -m venv ${VENV_DIR}
                     . ${VENV_DIR}/bin/activate
@@ -28,7 +28,7 @@ pipeline {
 
         stage('Install Dependencies') {
             steps {
-                sh """
+                bat """
                     . ${VENV_DIR}/bin/activate
                     pip install -r requirements.txt
                 """
@@ -37,7 +37,7 @@ pipeline {
 
         stage('Run Selenium Tests') {
             steps {
-                sh """
+                bat """
                     . ${VENV_DIR}/bin/activate
                     pytest --disable-warnings --maxfail=1 -q
                 """
